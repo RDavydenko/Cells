@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GameEngine
 {
-	public class GameEngine
+	public class Engine
 	{
 		private readonly int _rows;
 		private readonly int _cols;
 		public bool[,] GameField { get; private set; }
 
-		public GameEngine(int rows, int cols, int density)
+		public Engine(int rows, int cols, int density)
 		{
 			if (rows < 1 || cols < 1)
 			{
@@ -76,11 +80,6 @@ namespace GameEngine
 			return count;
 		}
 
-		private bool HasLife(int x, int y)
-		{
-			return GameField[x, y];
-		}		
-
 		public void NextGeneration()
 		{
 			bool[,] newGameField = new bool[_rows, _cols];
@@ -88,17 +87,18 @@ namespace GameEngine
 			{
 				for (int j = 0; j < _cols; j++)
 				{
-					if (!HasLife(i, j) && CountNeighbors(i, j) == 3)
+					int countNeighbors = CountNeighbors(i, j);
+					if (!GameField[i, j] && countNeighbors == 3)
 					{
 						newGameField[i, j] = true;
 					}
-					else if (HasLife(i, j) && CountNeighbors(i, j) != 3)
+					else if (GameField[i, j] && (countNeighbors < 2 || countNeighbors > 3))
 					{
 						newGameField[i, j] = false;
 					}
 					else
 					{
-						newGameField[i, j] = HasLife(i, j);
+						newGameField[i, j] = GameField[i, j];
 					}
 				}
 			}

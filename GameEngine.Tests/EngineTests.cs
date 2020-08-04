@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GameEngine.Tests
 {
 	[TestClass]
-	public class GameEngineTests
+	public class EngineTests
 	{
 		[TestMethod]
 		public void Initialize_GameField_IsNotNull()
@@ -13,7 +13,7 @@ namespace GameEngine.Tests
 			// Arrange
 
 			// Act
-			GameEngine gameEngine = new GameEngine(100, 100, 1);
+			Engine gameEngine = new Engine(100, 100, 1);
 
 			// Assert
 			Assert.IsNotNull(gameEngine.GameField);
@@ -26,7 +26,7 @@ namespace GameEngine.Tests
 			int density = 1; // Плотность (максимальное заполнение)
 
 			// Act
-			GameEngine gameEngine = new GameEngine(3, 3, density);
+			Engine gameEngine = new Engine(3, 3, density);
 
 			// Assert
 			CollectionAssert.DoesNotContain(gameEngine.GameField, false);
@@ -39,7 +39,7 @@ namespace GameEngine.Tests
 			int density = 0; // Плотность (минимальное заполнение)
 
 			// Act
-			GameEngine gameEngine = new GameEngine(100, 100, density);
+			Engine gameEngine = new Engine(100, 100, density);
 
 			// Assert
 			CollectionAssert.DoesNotContain(gameEngine.GameField, true);
@@ -53,7 +53,7 @@ namespace GameEngine.Tests
 			int cols = 0;
 
 			// Act
-			GameEngine gameEngine = new GameEngine(1, cols, 1);
+			Engine gameEngine = new Engine(1, cols, 1);
 		}
 
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
@@ -64,7 +64,7 @@ namespace GameEngine.Tests
 			int rows = 0;
 
 			// Act
-			GameEngine gameEngine = new GameEngine(rows, 1, 1);
+			Engine gameEngine = new Engine(rows, 1, 1);
 		}
 
 		[ExpectedException(typeof(ArgumentOutOfRangeException))]
@@ -75,14 +75,14 @@ namespace GameEngine.Tests
 			int density = -1;
 
 			// Act
-			GameEngine gameEngine = new GameEngine(1, 1, density);
+			Engine gameEngine = new Engine(1, 1, density);
 		}
 
 		[TestMethod]
 		public void NextGeneration_NewField_NotIncludedNull()
 		{
 			// Arrange
-			GameEngine gameEngine = new GameEngine(100, 100, 1);
+			Engine gameEngine = new Engine(100, 100, 1);
 
 			// Act
 			gameEngine.NextGeneration();
@@ -95,7 +95,7 @@ namespace GameEngine.Tests
 		public void NextGeneration_MinDensity_NotIncludeTrue()
 		{
 			// Arrange
-			GameEngine gameEngine = new GameEngine(100, 100, 0); // Пусто (density = 0)
+			Engine gameEngine = new Engine(100, 100, 0); // Пусто (density = 0)
 
 			// Act
 			gameEngine.NextGeneration();
@@ -109,7 +109,7 @@ namespace GameEngine.Tests
 		{
 			// Arrange
 			int density = 1; // Масимальная плотность
-			GameEngine gameEngine = new GameEngine(3, 3, density); // Полностью заполненный
+			Engine gameEngine = new Engine(3, 3, density); // Полностью заполненный
 			bool[,] expected = new bool[3,3]
 			{
 				{ true, false, true },
